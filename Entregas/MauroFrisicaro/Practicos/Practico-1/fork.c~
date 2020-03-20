@@ -3,17 +3,20 @@
    mensaje diferente en pantalla.
 */
 
+#include <stdio.h>
+// #include <sys/types.h>
+// #include <unistd.h>
 
 int main() {
-	int pid;
-	...
+	int pid, my_pid;
 	pid = fork();
+
 	if (pid == 0) {
-		/* hijo */
-		...
+		my_pid = getpid();
+		printf("Proceos Hijo, mi PID es %d\n", my_pid);
 	} else {
-	/* padre */
-		...
+		my_pid = getpid();
+		printf("Proceso Padre, mi PID es %d\n", my_pid);
 	}
 	return 0;
 }
