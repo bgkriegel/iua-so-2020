@@ -18,16 +18,22 @@
    Investigue las señales posibles por medio de man 7 signal. */
 
 #include <stdio.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 
 int main()
 {
-	int pid, my_pid;
+	int pid, my_pid, status;
 	pid = fork();
 
 	if (pid != 0) {
 		my_pid = getpid();
 		printf("Proceso Padre, mi PID es %d\n", my_pid);
-		wait(&status);
+
+		status = WIFEXITED;
+		wait(&status); // suspends execution of the calling  process  until one  of  its children terminates.
+		printf("WIFEXITED: %d\n", status);
 	} else {
 		my_pid = getpid();
 		printf("Proceso Hijo, mi PID es %d\n", my_pid);
@@ -36,3 +42,4 @@ int main()
 }
 
 
+// WIFEXITED returns  true if the child terminated normally, by calling exit(3).
