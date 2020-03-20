@@ -9,7 +9,13 @@
    ...
 
    Use el status de salida, analícelo por medio de las funciones macro
-   definidas en la página de manual de la llamada wait(). */
+   definidas en la página de manual de la llamada wait().
+
+   5. Escriba un programa similar al anterior, pero modificado de modo
+   que el hijo quede en espera indefinida, luego desde una terminal envíe
+   una señal (por medio del comando kill para que termine y observe el
+   comportamiento del status de salida.
+   Investigue las señales posibles por medio de man 7 signal. */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -39,11 +45,8 @@ int main()
 		if (WIFEXITED(status)) {
 
 			printf("Padre: Hijo salio con estado %d.\n",
-				   WEXITSTATUS(status));
-		}
-	} else {
-		perror("Fallo al crear el fork()");
-		_exit(2);				// Salida con error
-	}
-	return 0;
-}
+				   WEXITSTATUS(status));}
+			} else {
+			perror("Fallo al crear el fork()"); _exit(2);	// Salida con error
+			}
+			return 0;}
