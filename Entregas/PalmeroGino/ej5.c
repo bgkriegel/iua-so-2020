@@ -21,7 +21,7 @@ int main() {
 
 	} else {
 		sleep(10);
-		system("kill" + pid);
+		system("kill " + pid);
 		salidelhijo(&estado);
 		printf("soy el padre %d, mi hijo es: %d, mi padre es: %d\n", getpid(), pid, getppid());
 }
