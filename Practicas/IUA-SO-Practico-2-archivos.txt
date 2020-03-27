@@ -11,7 +11,11 @@ De esta manera "argc" contiene la cantidad de elementos de la linea
 de comando, mientras que "argv[]" es un array de char que contiene
 cada uno de los componentes.
 
-Tip: Solo debe recorrer el arreglo argv imprimiendo su contenido
+Tip: Solo debe recorrer el arreglo argv imprimiendo su contenidox|
+
+for ( i = 0; i < argc; i++ ) {
+  ... argv[i] ...
+}
 
 
 2) Genere un archivo que contenga un listado extendido del contenido
@@ -31,7 +35,13 @@ Tip: Para su programa debe:
 a) abrir el archivo para lectura utilizando open()
 b) recorrer el archivo haciendo read() y observando su
 valor de retorno, el mismo nos indica cuando hemos llegado 
-al final del archivo. 
+al final del archivo.
+c) cerrar el archivo
+
+Consejo: Siempre verifique valores de retorno de funciones (ver man page)
+ej.
+  fd = open( "test.txt", O_RDONLY ); /* verificar el valor de fd */
+  n = read( fd, buff, max ); /* verificar n, su valor es importante */
 
 
 3) Escriba un programa que lea el directorio raiz (/) y muestre su
