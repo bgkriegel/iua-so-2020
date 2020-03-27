@@ -1,0 +1,4 @@
+-rw-r--r-- 1 pablo pablo     0 mar 27 09:33 ./archivo.txt
+-rwxr-xr-x 1 pablo pablo 16928 mar 27 09:33 ./PracticoDos
+-rw-r--r-- 1 pablo pablo   557 mar 27 09:33 ./PracticoDos.c
+-rw-r--r-- 1 pablo pablo   143 mar 27 08:21 ./PracticoUno.c

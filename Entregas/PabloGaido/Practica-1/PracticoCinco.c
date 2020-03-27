@@ -32,7 +32,7 @@ int main()
 		 //waiting for child to terminate
     		pid = wait(&status);
 
-		system("kill" + hijo);
+		 kill(hijo, SIGKILL);
 
    		if ( WIFEXITED(status) ){
       		printf("Parent: Child exited with status: %d\n", WEXITSTATUS(status));
