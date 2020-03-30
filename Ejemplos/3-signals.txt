@@ -18,12 +18,12 @@ a) main()
 
 	pid = fork()
 	if ( padre ) {
-		signal( SIG, sigmgrpapa ); 	/* padre maneja señal SIG usando func sigmgrpapa */
+		signal( SIG, sigmgrpadre ); 	/* padre maneja señal SIG usando func sigmgrpadre */
 	} else {
-		signal( SIG, sigmgrhijo ); 	/* hijo maneja señal SIG usando func sigmgrhijo */
+		signal( SIG, sigmgrhijo ); 	    /* hijo maneja señal SIG usando func sigmgrhijo */
 	}
 
-	while ( 1 ) {
+	while ( 1 ) {                       /* loop infinito */
 		sleep(1);
 	}
 
@@ -38,7 +38,7 @@ b) sigmgrpapa
 	}
 
 Esta función necesita saber PIDHIJO, como no se le puede pasar por argumento, deberá
-estar en una vairable global.
+estar en una variable global.
 
 c) sigmgrhijo
 
