@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
 {
 
 	int fd, fdbak;
-	char buf[10000];			// Tamaño del Buffer en Bytes
+	char buf[10000]; // Tamaño del Buffer en Bytes
 	ssize_t nr_bytes;
 
 	fd = open(argv[1], O_RDONLY);
@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
 	if (fd == -1) {
 		printf("Error al abrir el archivo.\n");
 	} else {
-		nr_bytes = read(fd, buf, 10000);	// Va a leer 10 mil caracteres
+		nr_bytes = read(fd, buf, 10000); // Va a leer 10 mil caracteres
 		close(fd);
 
 		if (nr_bytes == 0) {

@@ -56,7 +56,8 @@
 
 int main(int argc, char *argv[])
 {
-	 if(argc != 2) return 1;
+	if (argc != 2)
+		return 1;
 
 	int fd, st;
 	struct stat fileStat;
@@ -67,7 +68,7 @@ int main(int argc, char *argv[])
 		printf("Error: no se puede crear el archivo\n");
 		exit(1);
 	}
-	dprintf(fd, "texto de prueba\n");	// escribimos en file descriptor
+	dprintf(fd, "lorem ipsum\n");	// escribimos en file descriptor
 	close(fd);
 
 	// Ahora usamos funcion stat()
@@ -80,17 +81,16 @@ int main(int argc, char *argv[])
 	if (stat(argv[1], &fileStat) < 0)
 		return 1;
 
-	printf("File UID: %d\n", fileStat.st_uid);
-
-	printf("Information for %s\n", argv[1]);
+	printf("Informacion de %s\n", argv[1]);
 	printf("---------------------------\n");
-	printf("File Size: \t\t%ld bytes\n", fileStat.st_size);
-	printf("Number of Links: \t%ld\n", fileStat.st_nlink);
-	printf("File inode: \t\t%ld\n", fileStat.st_ino);
+	prinft("FID: %d\n", fileStat.st_uid);
+	printf("Tamanio de Archivo: \t\t%ld bytes\n", fileStat.st_size);
+	printf("Numbero de Enlaces: \t%ld\n", fileStat.st_nlink);
+	printf("File Inode: \t\t%ld\n", fileStat.st_ino);
 
-//	printf("%#o", var.st_mode & ~(S_IMFT));
+//  printf("%#o", var.st_mode & ~(S_IMFT));
 
-	printf("File Permissions: \t");
+	printf("Permisos de Archivo: \t");
 	printf((S_ISDIR(fileStat.st_mode)) ? "d" : "-");
 	printf((fileStat.st_mode & S_IRUSR) ? "r" : "-");
 	printf((fileStat.st_mode & S_IWUSR) ? "w" : "-");
@@ -103,8 +103,8 @@ int main(int argc, char *argv[])
 	printf((fileStat.st_mode & S_IXOTH) ? "x" : "-");
 	printf("\n\n");
 
-	printf("The file %s a symbolic link\n",
-		   (S_ISLNK(fileStat.st_mode)) ? "is" : "is not");
+	printf("El archivo %s un vinculo simbolico.\n",
+		   (S_ISLNK(fileStat.st_mode)) ? "es" : "no es");
 
 	return 0;
 }
