@@ -13,6 +13,23 @@
 #include <sys/types.h>
 #include <time.h>
 #include <sys/sysmacros.h>
+#include <string.h>
+
+char *getTimeFormattedToString(time_t time)
+{
+  struct tm *_time;
+
+  char timeFormattedToString[80];
+  char *result;
+
+  _time = localtime(&time);
+
+  strftime(timeFormattedToString, 80, "%d/%m/%Y %H:%M", _time);
+
+  result = timeFormattedToString;
+
+  return result;
+}
 
 char *getFileType(mode_t mode)
 {
@@ -70,9 +87,9 @@ void printFileProperties(char *filename, struct stat stats)
   printf("Tamaño total (en bytes): %ld\n", stats.st_size);
   printf("Tamaño de bloque (para el sistema de ficheros de E/S): %ld\n", stats.st_blksize);
   printf("Cantidad de bloques de 512 bytes asignados: %ld\n", stats.st_blocks);
-  printf("Hora de ultimo acceso: %s", ctime(&stats.st_atime));
-  printf("Hora de ultima modificacion: %s", ctime(&stats.st_mtime));
-  printf("Hora de ultimo cambio: %s", ctime(&stats.st_ctime));
+  printf("Hora de ultimo acceso: %s\n", getTimeFormattedToString(stats.st_atime));
+  printf("Hora de ultima modificacion: %s\n", getTimeFormattedToString(stats.st_mtime));
+  printf("Hora de ultimo cambio: %s\n", getTimeFormattedToString(stats.st_ctime));
 
   printf("\n---------------------------------------------------");
   printf("\nFin de las propiedades del archivo '%s'\n", filename);
