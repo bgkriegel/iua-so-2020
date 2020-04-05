@@ -1,0 +1,48 @@
+Esquema de solución ejercicio de señales
+----------------------------------------
+
+Participantes:
+Usuario (U), proceso padre (P) y proceso hijo (H)
+Señales (s)
+
+Acciones:
+a) U s-> P
+b) P s-> H
+
+El usuario envía una señal al padre, este la recibe y la 
+reenvia al hijo, ambos comentan por pantalla lo que sucede.
+
+Esquema de solución:
+
+a) main()
+
+	pid = fork()
+	if ( padre ) {
+		signal( SIG, sigmgrpadre ); 	/* padre maneja señal SIG usando func sigmgrpadre */
+	} else {
+		signal( SIG, sigmgrhijo ); 	    /* hijo maneja señal SIG usando func sigmgrhijo */
+	}
+
+	while ( 1 ) {                       /* loop infinito */
+		sleep(1);
+	}
+
+Padre a hijo invocan diferentes manejadores de señal, luego ingresan en loop infinito
+
+b) sigmgrpapa
+
+	{
+		signal(SIG, sigmgrpapa); /* re-invocamos la señal */
+		kill( PIDHIJO, SIG);
+		print-algun-mensaje
+	}
+
+Esta función necesita saber PIDHIJO, como no se le puede pasar por argumento, deberá
+estar en una variable global.
+
+c) sigmgrhijo
+
+	{
+		signal(SIG, sigmgrhijo); /* re-invocamos la señal */
+		print-algun-mensaje
+	}
