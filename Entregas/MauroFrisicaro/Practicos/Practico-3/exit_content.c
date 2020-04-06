@@ -22,8 +22,7 @@ int main()
 
 		// Si lee 1 sigue, si lee 0 termina.
 		if (buff == '0') {
-			printf(">> Saliendo. OPEN retorno: %d. (iteración %d) <<\n",
-				   fd, i + 1);
+			printf(">> Saliendo. OPEN retorno: %d. (iteración %d) <<\n", fd, i + 1);
 			exit(1);
 		} else if (buff == '1') {
 			printf("Ejecutando... Iteración (%d)\n", i + 1);
