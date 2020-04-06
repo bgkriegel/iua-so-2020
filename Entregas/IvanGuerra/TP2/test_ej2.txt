@@ -1,0 +1,28 @@
+total 2452
+drwxr-xr-x   2 root root    4096 mar  7 12:17 bin
+drwxr-xr-x   4 root root    4096 mar 22 16:24 boot
+drwxrwxr-x   2 root root    4096 oct 26  2018 cdrom
+-rw-------   1 root root 2363392 ene  9  2019 core
+drwxr-xr-x  22 root root    4780 abr  1 21:35 dev
+drwxr-xr-x 146 root root   12288 mar 31 02:13 etc
+drwxr-xr-x   3 root root    4096 oct 26  2018 home
+lrwxrwxrwx   1 root root      33 mar 21 12:20 initrd.img -> boot/initrd.img-4.15.0-91-generic
+lrwxrwxrwx   1 root root      33 mar 21 12:20 initrd.img.old -> boot/initrd.img-4.15.0-88-generic
+drwxr-xr-x  21 root root    4096 nov  5  2018 lib
+drwxr-xr-x   2 root root    4096 abr 26  2018 lib64
+drwx------   2 root root   16384 oct 26  2018 lost+found
+drwxr-xr-x   3 root root    4096 oct 27  2018 media
+drwxr-xr-x   2 root root    4096 abr 26  2018 mnt
+drwxr-xr-x   9 root root    4096 ago  8  2019 opt
+dr-xr-xr-x 232 root root       0 abr  1 20:20 proc
+drwx------   9 root root    4096 mar  5 13:09 root
+drwxr-xr-x  29 root root     860 abr  2 00:06 run
+drwxr-xr-x   2 root root   12288 mar  7 12:14 sbin
+drwxr-xr-x   2 root root    4096 oct 26  2018 snap
+drwxr-xr-x   2 root root    4096 abr 26  2018 srv
+dr-xr-xr-x  13 root root       0 abr  1 21:09 sys
+drwxrwxrwt  16 root root   45056 abr  2 01:21 tmp
+drwxr-xr-x  11 root root    4096 ago  9  2019 usr
+drwxr-xr-x  14 root root    4096 abr 26  2018 var
+lrwxrwxrwx   1 root root      30 mar 21 12:20 vmlinuz -> boot/vmlinuz-4.15.0-91-generic
+lrwxrwxrwx   1 root root      30 mar 21 12:20 vmlinuz.old -> boot/vmlinuz-4.15.0-88-generic

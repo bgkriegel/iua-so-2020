@@ -23,7 +23,9 @@ int main(){
 		
 	} else {
 
-		pid = wait(&status);
+		kill(pidMuestra, SIGKILL);
+
+		wait(&status);
 
 		if(WIFEXITED(status)){
 
