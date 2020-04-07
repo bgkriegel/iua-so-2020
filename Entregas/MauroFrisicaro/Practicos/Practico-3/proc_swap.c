@@ -1,5 +1,10 @@
-/* 3) Hacer que un proceso finalice a otro: Variante de los anteriores, pero esta vez tenemos dos procesos, A y B.
-   A funciona como en 2, B espera un cierto tiempo y luego escribe el archivo esperado por A. */
+/* 4) Intercambio de mensajes entre dos procesos utilizando un archivo: Sean dos procesos A y B, los cuales van a 'hablar'
+
+   A crea un archivo, ej. comunicador.txt, y escribe dentro de el un mensaje.
+   Luego lee periodicamente el archivo y espera que el mensaje 'cambie', cuando descubre que ha cambiado termina.
+
+   B verifica que exista el archivo anterior, cuando lo encuentra lo lee,
+   luego lo sobre-escribe con un mensaje de respuesta, cierra el archivo y termina. */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -12,30 +17,31 @@
 
 int main(int argc, char *argv[])
 {
-	pid_t pid, c_pid;
 	int status;
 
 	c_pid = fork();
 
-	// Proceso B - Hijo
+	// Proceso A - Hijo
 	if (c_pid == 0) {
-
-		pid = getpid();
-		printf("Hijo: Mi PID es  %d.\n", pid);
-		printf("Hijo: Durmiendo 5 segundos.\n");
-		sleep(5);
-
 		int fd;
+
+		printf("Hijo: Voy a crear el archivo.\n");
 		fd = open(argv[1], O_RDWR | O_CREAT, 0644);
 
 		if (fd == -1) {
 			printf("Hijo: Error al abrir el archivo.\n");
 		} else {
-			dprintf(fd, "0");
+			printf("Hijo: Ahora voy a escribir Hola!");
+			dprintf(fd, "HOla!");
+			
+			
+			
+			
+			
 		}
 	}
 
-	// Proceso A - Padre
+	// Proceso B - Padre
 	else if (c_pid > 0) {
 
 		pid = wait(&status);
@@ -52,7 +58,8 @@ int main(int argc, char *argv[])
 
 			// Si lee 1 sigue, si lee 0 termina.
 			if (buff == '0') {
-				printf("Padre: Saliendo. OPEN retorno: %d. (iteración %d)\n", fd, i + 1);
+				printf
+					("Padre: Saliendo. OPEN retorno: %d. (iteración %d)\n", fd, i + 1);
 				exit(1);
 			} else if (buff == '1') {
 				printf("Padre: Ejecutando... Iteración (%d)\n", i + 1);
