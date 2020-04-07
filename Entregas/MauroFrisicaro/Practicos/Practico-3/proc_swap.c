@@ -6,6 +6,7 @@
    B verifica que exista el archivo anterior, cuando lo encuentra lo lee,
    luego lo sobre-escribe con un mensaje de respuesta, cierra el archivo y termina. */
 
+#include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -17,13 +18,12 @@
 
 int main(int argc, char *argv[])
 {
-	int status;
-
-	c_pid = fork();
+	pid_t pid = fork();
 
 	// Proceso A - Hijo
-	if (c_pid == 0) {
-		int fd;
+	if (pid == 0) {
+		int fd, i = 0;
+		char buff[100];
 
 		printf("Hijo: Voy a crear el archivo.\n");
 		fd = open(argv[1], O_RDWR | O_CREAT, 0644);
@@ -31,48 +31,38 @@ int main(int argc, char *argv[])
 		if (fd == -1) {
 			printf("Hijo: Error al abrir el archivo.\n");
 		} else {
-			printf("Hijo: Ahora voy a escribir Hola!");
-			dprintf(fd, "HOla!");
-			
-			
-			
-			
-			
+			printf("Hijo: Ahora voy a escribir Hola!\n");
+			dprintf(fd, "Hola!");
+			close(fd);
+
+			while (i >= 0) {
+				fd = open(argv[1], O_RDONLY);
+				read(fd, &buff, 100);
+				printf("BUFF: %s \n", buff);
+
+				if (strcmp(buff, "Hola!")) {
+					printf("Hijo: Saliendo. (iteración %d)\n", i + 1);
+					close(fd);
+					return 1;
+				} else {
+					printf("Hijo: Ahora voy a leer hasta que cambie...\n");
+				}
+				sleep(i + 1);
+				i++;
+			}
 		}
 	}
-
 	// Proceso B - Padre
-	else if (c_pid > 0) {
+	else if (pid > 0) {
 
-		pid = wait(&status);
+		int fd;
+		char buf[100];
 
-		int fd, i = 0;
-		char buff = 2;
+		fd = open(argv[1], O_RDWR);
+		read(fd, buf, 100);
+		dprintf(fd, "Que tal!?\n");
+		close(fd);
 
-		printf("Padre: Ejecutando...\n");
-
-		while (i >= 0) {
-			fd = open(argv[1], O_RDONLY);
-			read(fd, &buff, 1);
-			printf("Padre: Linea leida.\n");
-
-			// Si lee 1 sigue, si lee 0 termina.
-			if (buff == '0') {
-				printf
-					("Padre: Saliendo. OPEN retorno: %d. (iteración %d)\n", fd, i + 1);
-				exit(1);
-			} else if (buff == '1') {
-				printf("Padre: Ejecutando... Iteración (%d)\n", i + 1);
-			} else {
-				printf("Padre: Ejecutando...\n");
-			}
-			sleep(i + 1);
-			i++;
-		}
-
-		if (WIFEXITED(status)) {
-			printf("Padre: Hijo salio con estado %d.\n", WEXITSTATUS(status));
-		}
 	}
 
 	return 0;
