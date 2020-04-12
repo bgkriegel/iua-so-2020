@@ -39,6 +39,7 @@ int main () {
 	
 	/*La función closedir() cierra el flujo de directorio que se obtuvo con opendir. 
 	Recibe como parámetro el puntero al directorio y devuelve 0 en caso de éxito y -1 en caso de error.*/
+	//funciona bien el programa
 	
     return 0;
 }
