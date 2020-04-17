@@ -30,7 +30,7 @@ int main()
 			close((int) fd);
 		
 			aux = atoi(buf);
-			printf("%d",aux);		
+			printf("%d\n",aux);		
 			if(0 == aux)
 			return 0;
 		
@@ -40,9 +40,9 @@ int main()
 	} else {
 
 		sleep(5);
-		fd = open("texto.txt", O_RDWR);	//  "O_RDWR" me indica que es lectura y escritura
-		buf[0]='0'; 
-		buf[1]='\0';
+		fd = open("texto.txt", O_CREAT | O_TRUNC | O_RDWR, 0644 );	//  "O_RDWR" me indica que es lectura y escritura
+		buf[0]='5'; 
+		//buf[1]='\0';
 		write(fd, buf, strlen(buf));
 		close((int) fd);
 
