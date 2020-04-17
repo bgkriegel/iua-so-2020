@@ -26,11 +26,12 @@ int main()
 		exit(1);
 
 		} else {
-		nr_bytes = read(fd, &buf, 1);	//Extraigo el contenido de "texto.txt"
+		nr_bytes = read(fd, &buf, 10);	//Extraigo el contenido de "texto.txt"
 		close((int) fd);
 		
-		int aux = buf + 0;
-		if(aux == '0')
+
+		printf(atoi(buf));		
+		if(0 == atoi(buf))
 		return 0;
 		
 	}
