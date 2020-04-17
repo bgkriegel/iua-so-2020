@@ -6,6 +6,7 @@
 #include <dirent.h>
 #include <errno.h>
 #include <fcntl.h>
+#include <string.h>
 
 
 
@@ -40,8 +41,9 @@ int main()
 
 		sleep(5);
 		fd = open("texto.txt", O_RDWR);	//  "O_RDWR" me indica que es lectura y escritura
-		buf[0] = 0;
-		write(fd, buf[0], 10);
+		buf[0]='0'; 
+		buf[1]='\0';
+		write(fd, buf, strlen(buf));
 		close((int) fd);
 
 	}
