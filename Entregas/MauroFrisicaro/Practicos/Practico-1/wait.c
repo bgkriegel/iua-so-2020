@@ -38,8 +38,7 @@ int main()
 		// WIFEXITED returns  true if the child terminated normally.
 		if (WIFEXITED(status)) {
 
-			printf("Padre: Hijo salio con estado %d.\n",
-				   WEXITSTATUS(status));
+			printf("Padre: Hijo salio con estado %d.\n", WEXITSTATUS(status));
 		}
 	} else {
 		perror("Fallo al crear el fork()");
