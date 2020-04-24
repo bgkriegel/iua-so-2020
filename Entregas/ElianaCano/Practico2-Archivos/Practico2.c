@@ -21,23 +21,22 @@ fd = open("out.txt", O_RDONLY); //Abro el archivo solo para lectura. Devuelve -1
 //read retorna -1 en caso de error, por lo cual hay que monitorear este valor en cada lectura
 
 if (fd == -1) {
-    printf ("Error al abrir el archivo. \n");
+    printf ("Error al abrir el archivo.");
     exit (1);
 }
 
 while (bytes > 0) {
     bytes = read (fd, buff, 150);
-    printf ("--------------------Bytes = %ld  \n", bytes );
     if (bytes > 0)
-    printf( "%s \n", buff);
+    printf( "%s", buff);
+    
 } //leer hasta que se llegue al EOF (final del archivo), es decir, hasta que el número de bytes leídos sean 0.
-
-printf ("*******************Fin de la lectura**************************** \n");
+printf ("*******************Fin de la lectura****************************");
 
 close (fd);
 
 return 0;
 
-//No sé por qué el programa lee una línea más, aunque ya haya terminado el archivo
+//No sé por qué el programa lee una línea más, aunque ya haya terminado el archivo.Ya sé--> eliminar \n y el printf de bytes. Hice las correcciones y sigue mostrando una línea de más
 
 }
