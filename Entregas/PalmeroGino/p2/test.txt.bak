@@ -1,0 +1,5 @@
+total 16
+-rwxrwxrwx 1 unix unix 8528 Apr 12 20:27 a.out
+-rw-rw-rw- 1 unix unix  219 Apr 12 19:59 ej1.c
+-rw-rw-rw- 1 unix unix  465 Apr 12 20:27 ej2.c
+-rw-rw-rw- 1 unix unix    0 Apr 12 20:27 test.txt
