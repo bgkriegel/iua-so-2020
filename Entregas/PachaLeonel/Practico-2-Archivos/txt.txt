@@ -1,0 +1,22 @@
+total 580
+drwxr-xr-x  1 root root   4096 Mar 25 15:10 bin
+drwxr-xr-x  1 root root   4096 May 21  2019 boot
+drwxr-xr-x  1 root root   4096 Apr 12 18:27 dev
+drwxr-xr-x  1 root root   4096 Apr 12 18:27 etc
+drwxr-xr-x  1 root root   4096 Dec  3 14:55 home
+-rwxr-xr-x  1 root root 591344 Dec 31  1969 init
+drwxr-xr-x  1 root root   4096 Mar 25 15:26 lib
+drwxr-xr-x  1 root root   4096 May 21  2019 lib64
+drwxr-xr-x  1 root root   4096 May 21  2019 media
+drwxr-xr-x  1 root root   4096 Dec  3 14:55 mnt
+drwxr-xr-x  1 root root   4096 May 21  2019 opt
+dr-xr-xr-x  9 root root      0 Apr 12 18:27 proc
+drwx------  1 root root   4096 May 21  2019 root
+drwxr-xr-x  1 root root   4096 Apr 12 18:27 run
+drwxr-xr-x  1 root root   4096 Mar 25 15:16 sbin
+drwxr-xr-x  1 root root   4096 Mar 21  2019 snap
+drwxr-xr-x  1 root root   4096 May 21  2019 srv
+dr-xr-xr-x 12 root root      0 Apr 12 18:27 sys
+drwxrwxrwt  1 root root   4096 Apr 12 19:48 tmp
+drwxr-xr-x  1 root root   4096 May 21  2019 usr
+drwxr-xr-x  1 root root   4096 May 21  2019 var
