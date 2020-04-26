@@ -25,7 +25,7 @@ if (fd == -1) {
 		exit(1);
 
 	} else {
-		c
+		
 		close((int) fd);
 
 		
