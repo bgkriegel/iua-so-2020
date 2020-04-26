@@ -16,7 +16,7 @@ int main () {
 	
 	int filedesc; //Descriptor de archivo
 	char buffer [250]; //Buffer de datos donde pongo los datos del archivos
-	ssize_t bytes = 2; //El ssize_t es el tipo entero con signo del resultado de sizeof
+	int bytes = 2; //El ssize_t es el tipo entero con signo del resultado de sizeof
 	
 	filedesc = open("txt.txt", O_RDONLY);	/*La funcion open() abre el archivo en el directorio actual, 
 											si el archivo no existe, puede crearse.
@@ -32,17 +32,14 @@ int main () {
 	
 	while (bytes > 0){
 		
-		bytes = read (filedesc, buffer, 200);
+		bytes = read (filedesc, buffer, 250);
 		
 		/*La funcion read (int fd , void * buf , size_t count ) intenta leer para contar bytes 
 		del descriptor de archivo filedesc en el buffer comenzando en buf, la cantidad de count
 		Retorna el valor de bytes leidos, pero en caso de error devuelve -1, por eso el while en cada lectura*/
 		
-		//printf(" ___________________________ Lei %ld Bytes ___________________________", bytes); //el %ld es para long int en decimal
-		// esto no haria falta...
-		
 		if (bytes > 0)
-			printf("%s", buffer); //imprimo lo que acabo de leer		
+			printf("%s", buffer); //imprimo lo que acabo de leer	
 		
 	}
 	
@@ -50,8 +47,6 @@ int main () {
 	
 	close (filedesc);
 	
-	
-	/*NOTA: AL FINAL Y ENTRE MEDIO NO IMPRIME BIEN EL ARCHIVO*/
 	
     return 0;
 }
