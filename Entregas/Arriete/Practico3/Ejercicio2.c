@@ -7,8 +7,7 @@
 
 int main(){
 
-	int fd;
-	int i = 1;
+	int fd, i = 1;
 	char buff;
 
 	while(i > 0){
@@ -16,17 +15,13 @@ int main(){
 		/*El archivo archivoVerificar se encuentra en blanco debera escribirle un valor*/
 
 
-		fd = open("archivoVerificar.txt", O_RDONLY);
+		fd = open("archivoVerificar.txt", O_RDONLY|O_CREAT);
 
 		if (fd == -1)
 		{
 			printf("No se pudo abrir el archivo\n");
 			exit(1);
 		} else {
-			if (i == 5)
-			{
-				
-			}
 			read(fd,&buff,MAX_BYTES);
 			if (buff == '1')
 			{

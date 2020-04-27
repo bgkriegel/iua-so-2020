@@ -9,8 +9,15 @@ int main(){
 	int i =1;
 
 	while(i > 0){
+		if(i == 5){
+		
+			fd = open("archivoAbrir.txt", O_RDONLY|O_CREAT);
 
-		fd = open("archivoAbrir.txt", O_RDONLY);
+		} else {
+
+			fd = open("archivoAbrir.txt", O_RDONLY);
+
+		}
 
 		if (fd == -1)
 		{
