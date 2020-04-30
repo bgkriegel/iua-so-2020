@@ -23,7 +23,7 @@ int main()
 			fd = open("texto.txt", O_RDONLY);	//  "O_RDONLY" me indica que solo hago lectura
 			if (fd == -1) {
 
-					printf("Error ar leer el archivo, reintentando...");
+					printf("Error ar leer el archivo, lectura abortada");
 	
 		} else {
 			nr_bytes = read(fd, &buf, 256);	//Extraigo el contenido de "texto.txt"
@@ -31,7 +31,7 @@ int main()
 		
 			aux = atoi(buf);
 			printf("%d\n",aux);		
-			if(0 == aux)
+			if(0 == (int) aux)
 			return 0;
 		
 		}
@@ -40,8 +40,12 @@ int main()
 	} else {
 
 		sleep(5);
+
+		fd = open("texto.txt", O_RDWR);	//  "O_RDWR" me indica que es lectura y escritura
+		buf[0]='0'; 
+
 		fd = open("texto.txt", O_CREAT | O_TRUNC | O_RDWR, 0644 );	//  "O_RDWR" me indica que es lectura y escritura
-		buf[0]='5'; 
+		buf[0]='0'; 
 		//buf[1]='\0';
 		write(fd, buf, strlen(buf));
 		close((int) fd);
