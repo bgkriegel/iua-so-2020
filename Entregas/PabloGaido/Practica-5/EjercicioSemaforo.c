@@ -50,7 +50,7 @@ static void * productor_Produce(void* arg)
 		{
 		sem_wait(&semaforo); //Reserva su turno para modificar los productos
 		usleep(750000); //espero 3/4 de segundo
-		producto ++;
+		producto ++;    //produzco
 		printf("%s %d","Produciendo... Productos:", producto);
 		printf("\n");
 		sem_post(&semaforo); //Libera los productos
@@ -71,7 +71,7 @@ static void * consumidor_Consume(void* arg)
 		{
 		sem_wait(&semaforo); //Reserva su turno para modificar los productos
 		usleep(750000); //espero 3/4 de segundo
-		producto --;
+		producto --;    //consumo
 		printf("%s %d","Consumiendo... Productos:", producto);
 		printf("\n");
 		sem_post(&semaforo); //Libera los productos
