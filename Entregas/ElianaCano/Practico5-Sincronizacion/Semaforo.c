@@ -53,7 +53,7 @@ accederá al fichero. */
 static void * producir(void* arg)
 {
 
-	while(producto < 500) //el máximo es 500
+	while(producto < 1000) //el máximo es 500
 	{
 		
 	if(producto < 8) // Si quedan menos de 8 productos produce
@@ -68,8 +68,7 @@ static void * producir(void* arg)
 
 		usleep(750000); //espera
 		producto ++;    //producir
-		printf("%s %d","Produciendo... Productos:", producto);
-		printf("\n");
+		printf("Produciendo... Cantidad de productos: %d \n", producto);
 		sem_post(&sem); //Libera los productos
 		}
 
@@ -81,16 +80,15 @@ static void * producir(void* arg)
 static void * consumir(void* arg)
 {
 
-	while(producto < 500)
+	while(producto < 1000)
 	{
 		
-	if(producto >= 4)   //Si hay 5 o mas productos consume
+	if(producto > 4)   //Si hay 5 o mas productos consume
 		{
 		sem_wait(&sem); 
 		usleep(750000);
 		producto --;    //consumir
-		printf("%s %d","Consumiendo... Productos:", producto);
-		printf("\n");
+		printf("Consumiendo... cantidad de productos: %d \n", producto);
 		sem_post(&sem); //Libera los productos
 		}
 
