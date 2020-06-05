@@ -70,7 +70,8 @@ void procesarRegistro (char *registro, int tamanioRegis) {
     directorio [datoBase - 24] = '\0';
     printf ("El directorio es: %s\n\n", directorio);
 
-    cantTags = atoi(directorio) / 12;
+    cantTags = strlen(directorio) / 12;
+    printf ("%d\n", cantTags);
 
     // Procedo a mostrar cada tag del directorio
 
@@ -96,6 +97,8 @@ void procesarRegistro (char *registro, int tamanioRegis) {
 
         strncpy (aux, registro + ubicacTag[j], largoTag[j]);
 
+        for(int p = 0; p < largoTag[j]; p++) //imprimo el dato
+	    printf("%c",aux[p]);
 
 
 
