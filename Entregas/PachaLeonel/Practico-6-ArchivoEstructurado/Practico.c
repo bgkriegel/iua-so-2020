@@ -8,102 +8,111 @@
 // Este ejercicio lo hicimos en conjunto con ELIANA CANO
 
 #include <stdio.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 #include <fcntl.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
-#include <stdlib.h>
 
-#define MAX 100000
+void procesarRegistro (char *registro, int largoRegistro);
 
-void procesarRegistro (char *registro, int tamanioRegis);
+int main(){
 
-int main () {
+	int fd;
+	char largoAux[6];
+	int tamanio;
+	char buffer [99999];
+	char registro [ 99999 ];
 
-    int filedesc, tamanioRegis, cantRegis = 0;
-    char buffer [MAX], registro [MAX], largo [6];
+	fd = open( "osbooks.iso2709", O_RDONLY );
+    if ( fd == -1 ) {
+        printf( "Error de lectura\n");
+        exit(1);
+    } 
 
-    filedesc = open ("osbooks2.iso2709.txt", O_RDONLY);
+    while ( read( fd, largoAux, 5 ) ) {
 
-    if (filedesc < 0) {
-        printf("Error al abrir el archivo\n");
-        exit(EXIT_FAILURE);
+     tamanio = atoi( largoAux );   //determino el tamaño del directorio
+
+        strcpy( registro, largoAux );  // registro = largoAux
+
+        read( fd, buffer, tamanio - 5 ); // leo lo que me falta del directorio
+       
+        strcat( registro, buffer );       // tamaño de directorio + directorio
+        
+	    procesarRegistro ( registro, tamanio );
+
+	return 0;
     }
-
-    while ( read (filedesc, largo, 5) ) {   // Leo 5 bytes (primeros del registro) 
-
-        cantRegis++;    // Sumo un registro más (puede haber 1 o más registros)
-        tamanioRegis = atoi(largo);     // Veo el largo del registro para luego leerlo completo
-
-        printf ("Registro número: %d, con un tamaño de %d caracteres\n", cantRegis, tamanioRegis);
-
-        strcpy (registro, largo);       // Copio los primeros 5 bytes que habia leido del registro
-
-        read (filedesc, buffer, tamanioRegis - 5);      // Leo todo lo que falta del registro de una sola vez, menos los 5 bytes que ya leí
-
-        strcat (registro, buffer);      // Concateno lo que leí al registro
-
-        procesarRegistro (registro, tamanioRegis);      // Llamo a la funcion para decodificar el registro leido
-
-    }
-
-    close (filedesc);
-    return 0;
 
 }
 
-void procesarRegistro (char *registro, int tamanioRegis) {
+void procesarRegistro ( char *registro, int largoRegistro ) {
+    char cabecera[25], datosBase [6];
+    char directorio[ 99999 ];
+    int  tag[3], datoBase;
+    int  ubicacion[99];
+    int tamanio[99];
+    char aux[999]; 
+    int i = 0;
 
-    char cabecera [25], directorio [MAX], datosBase [6], aux [MAX], directorioAux [MAX];
-    int datoBase, cantTags;
-    int tag [3], largoTag [4], ubicacTag [5];
-
-    strncpy (cabecera, registro, 24);
-    cabecera [25] = '\0';
+    strncpy ( cabecera, registro, 24 );
+    cabecera[25] = '\0';
     printf ("\nLa cabecera del registro es: %s\n", cabecera);
 
     strncpy (datosBase, registro + 12, 5);      // Cargo en datosBase 5 chars desde la posición 12 del registro, esto es para ver donde comienzan los datos
     datosBase [6] = '\0';
     printf ("Los datos base comienzan en: %s\n", datosBase);
-
+    
     datoBase = atoi (datosBase);
     strncpy (directorio, registro + 24, datoBase - 25);
     directorio [datoBase - 24] = '\0';
     printf ("El directorio es: %s\n\n", directorio);
 
-    cantTags = strlen(directorio) / 12;
-    printf ("%d\n", cantTags);
+    int nTag = strlen(directorio) / 12; //Divido por 12,porque cada tag tiene 12 de longitud
 
-    // Procedo a mostrar cada tag del directorio
+    printf("****************** %d \n", nTag);
 
-    for (int i = 0; i < cantTags; i++){
-
-        strncpy (directorioAux, directorio + (i * 12), 12);     //Copio las estructuras de los tags
-
-        strncpy (aux, directorioAux, 3);
-        tag [i] = atoi (aux);
-        printf ("Tag: %d\n", tag[i]);
-
-        strncpy (aux, directorioAux + 3, 4);
-        largoTag [i] = atoi (aux);
-        printf ("Largo del tag: %d\n", largoTag [i]);
-
-        strncpy (aux, directorioAux + 7, 5);
-        ubicacTag [i] = atoi (aux);
-        printf ("La ubicación del tag es: %d\n", ubicacTag[i]);
-
-    }
-
-    for (int j = 0; j < cantTags; j++){
-
-        strncpy (aux, registro + ubicacTag[j], largoTag[j]);
-
-        for(int p = 0; p < largoTag[j]; p++) //imprimo el dato
-	    printf("%c",aux[p]);
-
-
-
-
-    }
-
+    printf ("%d\n", datoBase);
     
+    for(i = 0; i<nTag;i++){  //poner nTag en lugar de 2
+
+    //printf("Entro al for \n");
+
+    strncpy( directorio, registro + 24 + (i*12), 12 );  //voy buscando los datos de 12 en 12, porque
+    //el directorio tiene longitud 12 para cada tag.
+
+    aux [0] = ' ';
+    aux [1] = ' ';
+    aux [2] = ' ';
+    aux [3] = ' ';
+    aux [4] = ' ';
+	
+    strncpy( aux, directorio, 3 );  //guardo el tag, son los primeros 3 del directorio encontrado
+    tag[i] = atoi(aux);
+    printf("tag: %d \n", tag[i]);
+
+    strncpy( aux, directorio + 3 , 4 ); //guardo el tamanio del dato, después del tag, los siguientes 4
+    //me dicen el tamanio del dato.
+    tamanio[i] = atoi(aux);
+    printf( "tamaño: %d \n", tamanio[i]);
+
+    strncpy( aux, directorio + 7 , 5 ); //guardo la ubicacion del dato, después del tag y del tamanio,
+    //(3+4), está la ubicación/posición del dato
+    ubicacion[i] = atoi(aux) + datoBase;  //donde de verdad empiezan los datos
+    printf("ubicacion: %d \n", ubicacion[i]);
+    }
+    
+    for(int j = 0; j < nTag; j++){
+
+	strncpy( aux, registro + ubicacion[j] + 24 + strlen(directorio), tamanio[j] ); //busco el dato
+
+    for(int p = 0;p<tamanio[j];p++) //imprimo el dato
+	printf("%c",aux[p]);
+
+    printf ("\n");
+
+
+    }
 }
