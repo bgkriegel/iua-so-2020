@@ -97,7 +97,8 @@ static void * consumir(void* arg)
 }
 
 //Preguntar por qué PAblo compila así:
-// gcc EjercicioSemaforo.c -o EjercicioSemaforo -Wall -pedantic -pthread
+// 
+
 
 //si el profe compila así: gcc -Wall -pthread -o semaforo P5-semaforos.c
 
