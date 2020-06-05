@@ -6,77 +6,77 @@
 #include <unistd.h>
 #include <string.h>
 
-void procesarPartes(int fd, int tamanio, int indice);
+void obtenerDatos ( char *record, int record_length );
 
-
-int main()
-{
-
-	char length[99999];
+int main(){
 	int fd;
-	int largoArchivo = 0;
-	int i = 0;
-	char lenght[5];
-	int indice = 0;
+	char lengthAux[6];
+	int length;
+	char buff[99999];
+	char record[ 99999 ];
 
-	fd = open("osbooks.iso2709", O_RDONLY);	//Verifico que el archivo existe
-	if (fd == -1) {
-		printf("Error de lectura\n");
-		exit(1);
-	}
+	 fd = open( "osbooks.iso2709", O_RDONLY );
+    if ( fd == -1 ) {
+        printf( "Error de lectura\n");
+        exit(1);
+    } 
 
-	while (read(fd, length, indice + 5)) {	//leo el tamaño del FIELD
+    while ( read( fd, lengthAux, 5 ) ) {
+ 
+        length = atoi( lengthAux );   //determino el tamaño del directorio
+        strcpy( record, lengthAux );  // record = lengthAux
+        read( fd, buff, length - 5 ); // leo lo que me falta del directorio
+        strcat( record, buff );       // tamaño de directorio + directorio
+        
+	obtenerDatos ( record, length );
 
-		lenght[0] = length[indice];  
-		lenght[1] = length[indice + 1]; 
-		lenght[2] = length[indice + 2]; 
-		lenght[3] = length[indice + 3]; 
-		lenght[4] = length[indice + 4];	//uno los caracteres donde se encuentra el tamaño
-		largoArchivo = atoi(lenght);
-
-
-		procesarPartes(fd, largoArchivo, indice);
-
-		indice = indice + largoArchivo;	//marco el comienzo del proximo FIELD
-	}
-
+	printf("\n\n\n");
+	return 0;
+    }
 
 }
 
+    void obtenerDatos ( char *record, int record_length ) {
+    char leader[25];
+    char directory[ 99999 ];
+    int  tag[99];
+    int  ubicacion[99];
+    int largo[99];
+    char aux[999]; 
+    int i = 0;
+    int corte = 0;
 
+    strncpy ( leader, record, 24 );
+    leader[25] = '\0';
+    printf( "Leader: %s\n", leader );
+    
+    
+    for(i = 0; i<20 /*(corte >= 0)&&(corte <= 9)*/;i++){  //leo mientras haya direcciones de datos, por defecto hay 20
 
-void procesarPartes(int fd, int lenght, int indice)
-{
-	char sector[99999];
-	char ubicacion[5];
+    strncpy( directory, record + 24 + (i*12), 12 );  //voy buscando los datos de 12 en 12
+	
+    strncpy( aux, directory, 3 );  //guardo el tag
+    tag[i] = atoi(aux);
 
-	read(fd, sector, lenght + indice);	//accedo a un FIELD del archivo. indice representa el tamaño del field anteior, por lo que me lo salteo
+    strncpy( aux, directory + 3 , 4 ); //guardo el largo del dato
+    largo[i] = atoi(aux);
 
-	for (int i = 0; i < 28; i++) {	//recorro los "address y ubicacion" de los datos. Por defecto puse que tiene 28 datos
+    strncpy( aux, directory + 7 , 5 ); //guardo la ubicacion del dato
+    ubicacion[i] = atoi(aux);
 
-		lenght[0] = sector[(24 + 3) + (i * 12) + indice]; 
-		lenght[1] = sector[(24 + 4) + (i * 12) + indice]; 
-		lenght[2] = sector[(24 + 5) + (i * 12) + indice]; 
-		lenght[3] = sector[(24 + 6) + (i * 12) + indice];	//uno los caracteres donde se encuentra el tamaño
-		lenght[4] = "";
+    // strncpy( aux, directory + 13 , 1 ); //establezco punto de corte..... en proceso
+    //corte = atoi(aux);
 
-		ubicacion[0] = sector[(24 + 7) + (i * 12) + indice]; 
-		ubicacion[1] = sector[(24 + 8) + (i * 12) + indice]; 
-		ubicacion[2] = sector[(24 + 9) + (i * 12) + indice]; 
-		ubicacion[3] = sector[(24 + 10) + (i * 12) + indice]; 
-		ubicacion[4] = sector[(24 + 11) + (i * 12) + indice];	//uno los caracteres donde se encuentra la ubicacion
+    }
 
+    
+    for(int j = 0;j<= i;j++){
+	printf("%i\t",tag[j]);   //imprimo el tag
+	strncpy( aux, record + ubicacion[j] + (i*12)  + 24, largo[j] ); //busco el dato
 
-		for (int j = atoi(ubicacion); j < atoi(lenght) + j; j++) {
-
-			printf("%c", sector[j]);	//imprimo los datos caracter por caracter
-
-
-		}
-
-		printf("\n");  //Separo los datos con un salto de pagina
-
-	}
-
-
+	for(int p = 0;p<largo[j];p++) //imprimo el dato
+	printf("%c",aux[p]);
+	
+	printf("\n");
+    }
 }
