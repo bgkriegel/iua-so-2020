@@ -50,6 +50,7 @@ int main(){
     printf( "Leader: %s\n", leader );
     
     strcpy (directory, record + 24);
+
     int num = strlen(directory); //Divido por 12,porque cada tag tiene 12 de longitud
 
     printf("****************** %d \n", num);
@@ -93,5 +94,15 @@ int main(){
 	//printf("%c",aux[p]);
 	
 	//printf("\n");
+
+//Ver cómo implementar esto. Esto me da el directorio, si uso STRLEN(directory), tengo el tamaño del directorio
+
+
+/* strncpy( directory, record + 24, base_data - 25);  //los primeros 24 son la cabecera, la salteo. Copio n caracteres
+    //n = la direccion donde empiezan los datos - 25 --> Guardo en directory TODO lo que sea directorio
+    directory[ base_data - 25 + 1] = '\0'; // ???
+    printf( "Directory: %s\n", directory );
+    printf( "\n" ); */
+
     }
 }
